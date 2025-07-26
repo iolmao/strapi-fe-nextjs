@@ -330,6 +330,19 @@
           "cssFilePath": "plasmic/simple_light_landing_page/PlasmicPageTitle.module.css",
           "scheme": "blackbox",
           "componentType": "component"
+        },
+        {
+          "id": "yJIbyjMNuVDQ",
+          "name": "HeroSection",
+          "type": "managed",
+          "projectId": "ibxSoXtBGpQJ21i2zn1Jd7",
+          "renderModuleFilePath": "plasmic/simple_light_landing_page/PlasmicHeroSection.tsx",
+          "importSpec": {
+            "modulePath": "HeroSection.tsx"
+          },
+          "cssFilePath": "plasmic/simple_light_landing_page/PlasmicHeroSection.module.css",
+          "scheme": "blackbox",
+          "componentType": "component"
         }
       ],
       "icons": [
