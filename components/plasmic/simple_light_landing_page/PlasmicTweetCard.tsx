@@ -81,6 +81,8 @@ export const PlasmicTweetCard__ArgProps = new Array<ArgPropType>();
 
 export type PlasmicTweetCard__OverridesType = {
   root?: Flex__<"div">;
+  img?: Flex__<typeof PlasmicImg__>;
+  freeBox?: Flex__<"div">;
   tweetTitle?: Flex__<typeof StrapiField>;
   tweetDescr?: Flex__<typeof StrapiField>;
 };
@@ -144,25 +146,65 @@ function PlasmicTweetCard__RenderFunc(props: {
         sty.root
       )}
     >
-      <StrapiField
-        data-plasmic-name={"tweetTitle"}
-        data-plasmic-override={overrides.tweetTitle}
-        className={classNames("__wab_instance", sty.tweetTitle)}
-        path={"t_title"}
+      <PlasmicImg__
+        data-plasmic-name={"img"}
+        data-plasmic-override={overrides.img}
+        alt={""}
+        className={classNames(sty.img)}
+        displayHeight={"auto"}
+        displayMaxHeight={"none"}
+        displayMaxWidth={"100%"}
+        displayMinHeight={"0"}
+        displayMinWidth={"0"}
+        displayWidth={"auto"}
+        height={"50px"}
+        loading={"lazy"}
+        src={(() => {
+          try {
+            return (
+              "https://strapi-production-99e8.up.railway.app" +
+              $ctx.currentStrapiTweetsItem.t_thumb.url
+            );
+          } catch (e) {
+            if (
+              e instanceof TypeError ||
+              e?.plasmicType === "PlasmicUndefinedDataError"
+            ) {
+              return undefined;
+            }
+            throw e;
+          }
+        })()}
+        width={"50px"}
       />
 
-      <StrapiField
-        data-plasmic-name={"tweetDescr"}
-        data-plasmic-override={overrides.tweetDescr}
-        className={classNames("__wab_instance", sty.tweetDescr)}
-        path={"t_content"}
-      />
+      <div
+        data-plasmic-name={"freeBox"}
+        data-plasmic-override={overrides.freeBox}
+        className={classNames(projectcss.all, sty.freeBox)}
+      >
+        <StrapiField
+          data-plasmic-name={"tweetTitle"}
+          data-plasmic-override={overrides.tweetTitle}
+          className={classNames("__wab_instance", sty.tweetTitle)}
+          path={"t_title"}
+        />
+
+        <StrapiField
+          data-plasmic-name={"tweetDescr"}
+          data-plasmic-override={overrides.tweetDescr}
+          className={classNames("__wab_instance", sty.tweetDescr)}
+          path={"t_content"}
+        />
+      </div>
     </div>
   ) as React.ReactElement | null;
 }
 
 const PlasmicDescendants = {
-  root: ["root", "tweetTitle", "tweetDescr"],
+  root: ["root", "img", "freeBox", "tweetTitle", "tweetDescr"],
+  img: ["img"],
+  freeBox: ["freeBox", "tweetTitle", "tweetDescr"],
   tweetTitle: ["tweetTitle"],
   tweetDescr: ["tweetDescr"]
 } as const;
@@ -171,6 +213,8 @@ type DescendantsType<T extends NodeNameType> =
   (typeof PlasmicDescendants)[T][number];
 type NodeDefaultElementType = {
   root: "div";
+  img: typeof PlasmicImg__;
+  freeBox: "div";
   tweetTitle: typeof StrapiField;
   tweetDescr: typeof StrapiField;
 };
@@ -235,6 +279,8 @@ export const PlasmicTweetCard = Object.assign(
   makeNodeComponent("root"),
   {
     // Helper components rendering sub-elements
+    img: makeNodeComponent("img"),
+    freeBox: makeNodeComponent("freeBox"),
     tweetTitle: makeNodeComponent("tweetTitle"),
     tweetDescr: makeNodeComponent("tweetDescr"),
 
