@@ -1,0 +1,8 @@
+.root {
+  position: relative;
+  font-family: "Unbounded";
+  font-size: var(--token-FOsivOlEJL-c);
+  text-align: center;
+  color: var(--token-wfRuRexli);
+  font-weight: 200;
+}

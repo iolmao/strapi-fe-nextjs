@@ -59,8 +59,15 @@ import {
   useGlobalActions
 } from "@plasmicapp/react-web/lib/host";
 
+import {
+  executePlasmicDataOp,
+  usePlasmicDataOp,
+  usePlasmicInvalidate
+} from "@plasmicapp/react-web/lib/data-sources";
+
 import Header from "../../Header"; // plasmic-import: du_-cq-phaaA/component
 import Section from "../../Section"; // plasmic-import: vXmiCGrryHWs/component
+import PageTitle from "../../PageTitle"; // plasmic-import: 0at2UuEoei3z/component
 import Button from "../../Button"; // plasmic-import: VH6l9_r_5fRU/component
 import { StrapiCollection } from "@plasmicpkgs/plasmic-strapi";
 import TweetCard from "../../TweetCard"; // plasmic-import: _SROjryz8RTr/component
@@ -68,6 +75,7 @@ import FeatureCard from "../../FeatureCard"; // plasmic-import: WEGSim4b4mhh/com
 import Testimonial from "../../Testimonial"; // plasmic-import: NeBI00mmTg9w/component
 import HomeCta from "../../HomeCta"; // plasmic-import: nmTnFj30_Iad/component
 import Footer from "../../Footer"; // plasmic-import: g6IKRQFUOsU4/component
+import { Fetcher } from "@plasmicapp/react-web/lib/data-sources";
 
 import { useScreenVariants as useScreenVariantsnmHt4WgOkMe3 } from "./PlasmicGlobalVariant__Screen"; // plasmic-import: nmHt4wgOkME3/globalVariant
 
@@ -106,6 +114,7 @@ export type PlasmicHome__OverridesType = {
   root?: Flex__<"div">;
   header?: Flex__<typeof Header>;
   topSection?: Flex__<typeof Section>;
+  pageTitle?: Flex__<typeof PageTitle>;
   strapiCollection?: Flex__<typeof StrapiCollection>;
   tweetCard?: Flex__<typeof TweetCard>;
   solutions?: Flex__<typeof Section>;
@@ -157,6 +166,40 @@ function PlasmicHome__RenderFunc(props: {
   const $ctx = useDataEnv?.() || {};
   const refsRef = React.useRef({});
   const $refs = refsRef.current;
+
+  let [$queries, setDollarQueries] = React.useState<
+    Record<string, ReturnType<typeof usePlasmicDataOp>>
+  >({});
+
+  const new$Queries: Record<string, ReturnType<typeof usePlasmicDataOp>> = {
+    strapiContent: usePlasmicDataOp(() => {
+      return {
+        sourceId: "4r3tGGNBbqceVxs7ZEQ9D5",
+        opId: "4d963978-7ae4-4373-8537-89d353198dc0",
+        userArgs: {},
+        cacheKey: `plasmic.$.${(() => {
+          try {
+            return "data.response.page_title";
+          } catch (e) {
+            if (
+              e instanceof TypeError ||
+              e?.plasmicType === "PlasmicUndefinedDataError"
+            ) {
+              return "";
+            }
+            throw e;
+          }
+        })()}.$.4d963978-7ae4-4373-8537-89d353198dc0.$.`,
+        invalidatedKeys: null,
+        roleId: null
+      };
+    })
+  };
+  if (Object.keys(new$Queries).some(k => new$Queries[k] !== $queries[k])) {
+    setDollarQueries(new$Queries);
+
+    $queries = new$Queries;
+  }
 
   const globalVariants = ensureGlobalVariants({
     screen: useScreenVariantsnmHt4WgOkMe3()
@@ -240,24 +283,12 @@ function PlasmicHome__RenderFunc(props: {
                 className={classNames(projectcss.all, sty.freeBox___1XDf)}
               >
                 <div className={classNames(projectcss.all, sty.freeBox__gEp29)}>
-                  <div
-                    className={classNames(
-                      projectcss.all,
-                      projectcss.__wab_text,
-                      sty.text___1ZZaf
-                    )}
-                  >
-                    {"Make your website"}
-                  </div>
-                  <div
-                    className={classNames(
-                      projectcss.all,
-                      projectcss.__wab_text,
-                      sty.text__dZg3
-                    )}
-                  >
-                    {"wonderful"}
-                  </div>
+                  <PageTitle
+                    data-plasmic-name={"pageTitle"}
+                    data-plasmic-override={overrides.pageTitle}
+                    className={classNames("__wab_instance", sty.pageTitle)}
+                    strapiContent={$queries.strapiContent}
+                  />
                 </div>
                 <div
                   className={classNames(
@@ -344,7 +375,17 @@ function PlasmicHome__RenderFunc(props: {
             subtitle={
               "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat."
             }
-            title={"Explore the solutions"}
+            title={
+              <div
+                className={classNames(
+                  projectcss.all,
+                  projectcss.__wab_text,
+                  sty.text__u6Zjd
+                )}
+              >
+                {"Powerful tools"}
+              </div>
+            }
           >
             <Stack__
               as={"div"}
@@ -638,6 +679,7 @@ const PlasmicDescendants = {
     "root",
     "header",
     "topSection",
+    "pageTitle",
     "strapiCollection",
     "tweetCard",
     "solutions",
@@ -649,7 +691,8 @@ const PlasmicDescendants = {
     "footer"
   ],
   header: ["header"],
-  topSection: ["topSection"],
+  topSection: ["topSection", "pageTitle"],
+  pageTitle: ["pageTitle"],
   strapiCollection: ["strapiCollection", "tweetCard"],
   tweetCard: ["tweetCard"],
   solutions: ["solutions", "columns"],
@@ -667,6 +710,7 @@ type NodeDefaultElementType = {
   root: "div";
   header: typeof Header;
   topSection: typeof Section;
+  pageTitle: typeof PageTitle;
   strapiCollection: typeof StrapiCollection;
   tweetCard: typeof TweetCard;
   solutions: typeof Section;
@@ -740,6 +784,7 @@ export const PlasmicHome = Object.assign(
     // Helper components rendering sub-elements
     header: makeNodeComponent("header"),
     topSection: makeNodeComponent("topSection"),
+    pageTitle: makeNodeComponent("pageTitle"),
     strapiCollection: makeNodeComponent("strapiCollection"),
     tweetCard: makeNodeComponent("tweetCard"),
     solutions: makeNodeComponent("solutions"),

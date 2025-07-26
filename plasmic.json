@@ -317,6 +317,19 @@
           "cssFilePath": "plasmic/simple_light_landing_page/PlasmicTweetCard.module.css",
           "scheme": "blackbox",
           "componentType": "component"
+        },
+        {
+          "id": "0at2UuEoei3z",
+          "name": "PageTitle",
+          "type": "managed",
+          "projectId": "ibxSoXtBGpQJ21i2zn1Jd7",
+          "renderModuleFilePath": "plasmic/simple_light_landing_page/PlasmicPageTitle.tsx",
+          "importSpec": {
+            "modulePath": "PageTitle.tsx"
+          },
+          "cssFilePath": "plasmic/simple_light_landing_page/PlasmicPageTitle.module.css",
+          "scheme": "blackbox",
+          "componentType": "component"
         }
       ],
       "icons": [
